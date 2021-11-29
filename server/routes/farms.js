@@ -20,9 +20,9 @@ router.post('/register', async (req, res, next) => {
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
 
-      await Farm.create({ username, password: hashPassword, email });
+      const farm = await Farm.create({ username, password: hashPassword, email });
 
-      const token = jwt.sign({ username, email }, process.env.SECRET_JWT, { expiresIn: '1h' });
+      const token = jwt.sign({ username, email, _id: farm._id }, process.env.SECRET_JWT, { expiresIn: '1h' });
 
       res.send(token);
 });
@@ -34,7 +34,7 @@ router.post('/login', async (req, res, next) => {
       const farmFromDb = await Farm.findOne({ email });
 
       if(bcrypt.compare(password, farmFromDb.password)) {
-        const token = jwt.sign({ username: farmFromDb.username, email }, process.env.SECRET_JWT, { expiresIn: '1h' });
+        const token = jwt.sign({ username: farmFromDb.username, email, _id: farmFromDb._id }, process.env.SECRET_JWT, { expiresIn: '1h' });
         return res.send(token);
       }
 
