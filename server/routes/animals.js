@@ -1,22 +1,20 @@
 const express = require('express');
 const Animal = require('../models/Animal');
-const jwt = require('jsonwebtoken');
+const { isAuthenticated } = require('../config/restrictions');
 
 const router = express.Router();
 
-router.post('/create', async (req, res, next) => {
-    const { type, count } = { ...req.body };
-    const token = req.header('authorization');
+router.post('/create', isAuthenticated, async (req, res, next) => {
+    const { type, count, breed } = { ...req.body };
 
-    jwt.verify(token, process.env.SECRET_JWT, async function (err, decoded) {
-        if (err) {
-            res.status(404).send('Invalid token');
-        } else {
-            console.log(decoded);
-            const animal = await Animal.create({ type, count, farm: decoded._id });
-            res.send(animal);
-        }
-    });
+    const animal = await Animal.create({ type, count, farm: res.locals.farmModel._id, breed });
+    res.send(animal);
+});
+
+router.get('/all', isAuthenticated, async (req, res) => {
+    const farmId = res.locals.farmModel._id;
+    const allAnimals = await Animal.find({ farm: farmId });
+    res.send(allAnimals);
 });
 
 module.exports = router;

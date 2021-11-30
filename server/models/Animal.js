@@ -13,6 +13,9 @@ const schema = new mongoose.Schema({
     farm: {
         type: ObjectId,
         ref: 'Farm',
+    },
+    breed: {
+        type: String,
     }
 });
 
