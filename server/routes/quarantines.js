@@ -6,17 +6,24 @@ const Quarantine = require('../models/Quarantine');
 const router = express.Router();
 
 router.post('/create', isAuthenticated, async (req, res) => {
-    const   type = req.body.type,
-            breed = req.body.breed,
-            animalCount = req.body.animalCount,
-            farmId = res.locals.farmModel._id;
-
+    const type = req.body.type,
+        breed = req.body.breed,
+        animalCount = req.body.animalCount,
+        farmId = res.locals.farmModel._id;
     try {
         const animal = await Animal.findOne({ farm: farmId, type, breed });
+        const isQurantined = await Quarantine.findOne({ animal: animal._id });
+        if (isQurantined) {
+            return res.json('The animal type and breed already are qurantined. You need to update it.');
+        }
+
+        const updatedAnimal = { activeCount: Number(animal.count) - Number(animalCount) };
+
+        await Animal.findByIdAndUpdate(animal._id, updatedAnimal);
         const quarantine = await Quarantine.create({ animalCount, animal: animal._id, farm: farmId });
-        res.send(quarantine);
-    } catch(err) {
-        res.json('Invalid data! The object which you finding don\'t exists.');
+        res.send({ quarantine });
+    } catch (err) {
+        res.json(err);
     }
 });
 

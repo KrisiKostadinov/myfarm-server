@@ -16,6 +16,9 @@ const schema = new mongoose.Schema({
     },
     breed: {
         type: String,
+    },
+    activeCount: {
+        type: Number
     }
 });
 

@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/create', isAuthenticated, async (req, res) => {
     const { type, count, breed } = { ...req.body };
 
-    const animal = await Animal.create({ type, count, farm: res.locals.farmModel._id, breed });
+    const animal = await Animal.create({ type, count, activeCount: count, farm: res.locals.farmModel._id, breed });
     res.send(animal);
 });
 
