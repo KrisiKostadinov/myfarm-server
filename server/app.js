@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const farmsRouter = require('./routes/farms');
 const animalsRouter = require('./routes/animals');
 const quarantinesRouter = require('./routes/quarantines');
+const quarantinedAnimalDetailsRouter = require('./routes/quarantinedAnimalDetails');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/', indexRouter);
 app.use('/farms', farmsRouter);
 app.use('/animal', animalsRouter);
 app.use('/quarantine', quarantinesRouter);
+app.use('/quarantine/details', quarantinedAnimalDetailsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
