@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { String } = mongoose.Schema.Types;
+const { String, Number } = mongoose.Schema.Types;
 
 const schema = new mongoose.Schema({
     username: {
@@ -12,6 +12,10 @@ const schema = new mongoose.Schema({
     },
     password: {
         type: String
+    },
+    food: {
+        type: Number,
+        default: 0
     }
 });
 

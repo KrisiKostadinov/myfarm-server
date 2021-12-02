@@ -33,4 +33,11 @@ router.get('/all/breed/:breed', isAuthenticated, async (req, res) => {
     res.send(allOfBreedAnimals);
 });
 
+router.delete('/:id', isAuthenticated, async (req, res) => {
+    const id = req.params.id;
+
+    const deletedAnimal = await Animal.findByIdAndDelete(id);
+    res.send(deletedAnimal);
+});
+
 module.exports = router;
