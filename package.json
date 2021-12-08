@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -19,5 +20,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
-  }
+  },
+  "homepage": "https://krisikostadinov.github.io/myfarm"
 }
