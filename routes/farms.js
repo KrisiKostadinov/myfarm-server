@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Farm = require('../models/Farm');
 const { isAuthenticated } = require('../config/restrictions');
+const config = require('../config/configuration');
 
 const router = express.Router()
 
@@ -21,8 +22,10 @@ router.post('/register', async (req, res, next) => {
   const hashPassword = await bcrypt.hash(password, salt);
 
   const farm = await Farm.create({ username, password: hashPassword, email });
+  console.log(farm);
 
-  const token = jwt.sign({ username, email, _id: farm._id }, process.env.SECRET_JWT, { expiresIn: '1h' });
+
+  const token = jwt.sign({ username, email, _id: farm._id }, config.secret_jwt, { expiresIn: '1h' });
 
   res.send(token);
 });
@@ -31,10 +34,12 @@ router.post('/login', async (req, res, next) => {
   var email = req.body.email,
     password = req.body.password;
 
-  const farmFromDb = await Farm.findOne({ email });
-
-  if (bcrypt.compare(password, farmFromDb.password)) {
-    const token = jwt.sign({ username: farmFromDb.username, email, _id: farmFromDb._id }, process.env.SECRET_JWT, { expiresIn: '1h' });
+    
+    const farmFromDb = await Farm.findOne({ email });
+    
+    if (bcrypt.compare(password, farmFromDb.password)) {
+      const token = jwt.sign({ username: farmFromDb.username, email, _id: farmFromDb._id }, config.secret_jwt, { expiresIn: '1h' });
+      console.log(token);
     return res.send(token);
   }
 
@@ -43,7 +48,7 @@ router.post('/login', async (req, res, next) => {
 
 router.get('/verify', (req, res, next) => {
   const token = req.header('authorization')
-  jwt.verify(token, process.env.SECRET_JWT, function (err, decoded) {
+  jwt.verify(token, config.secret_jwt, function (err, decoded) {
 
     if (err) {
       res.status(404).send('Invalid token');
