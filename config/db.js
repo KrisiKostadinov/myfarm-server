@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
+const config = require('../config/configuration');
 
-mongoose.connect(process.env.CONNECTION_URL, () => {
+mongoose.connect(config.db, () => {
     console.log('Database is ready!');
 });
