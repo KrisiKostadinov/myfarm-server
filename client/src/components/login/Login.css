@@ -1,0 +1,63 @@
+.login {
+    background-color: white;
+    padding: 2rem;
+    max-width: 700px;
+    margin-top: 4rem;
+    border-radius: 2px;
+}
+
+.login h2 {
+    text-align: center;
+}
+
+.login hr {
+    margin: 2rem 0;
+    border: solid 1px whitesmoke;
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.login form .field input {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: medium;
+    outline: none;
+    border: 1px solid whitesmoke;
+    border-radius: 2px;
+}
+
+.login .buttons {
+    display: inline-block;
+    text-align: center;
+}
+
+.login .buttons button.submit {
+    margin-right: 1rem;
+    padding: 1rem;
+    border: 1px solid whitesmoke;
+    background-color: #fb9300;
+    text-transform: uppercase;
+    color: white;
+    font-size: medium;
+    cursor: pointer;
+}
+
+.login .buttons button.submit:disabled {
+    background-color: whitesmoke;
+}
+
+.login .buttons .button {
+    border: none;
+    background-color: transparent;
+    color: #fb9300;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+}
