@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Register.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { BASE_URL_DB } from '../../App'
+import { UserContext } from '../../contexts/UserContext'
 
 const Register = () => {
 
     const initialValues = { username: '', email: '', password: '', confirmPassword: '' };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
+    const [serverError, setServerError] = useState('');
     const [isSubmit, setIsSubmit] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const navigate = useNavigate();
+    const { value, setValue } = useContext(UserContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,10 +28,43 @@ const Register = () => {
     };
 
     useEffect(() => {
+        let isSubscribed = true;
+        
         if (Object.keys(formErrors).length === 0 && isSubmit) {
             setIsSubmitted(true);
+            
+            if(isSubscribed) {
+                
+                const register = async () => {
+                    const res = await axios.post(BASE_URL_DB + 'farms/register',
+                    {
+                        username: formValues.username,
+                        password: formValues.password,
+                        email: formValues.email
+                    });
+                    
+                    if (res.status === 208) {
+                        setIsSubmitted(false);
+                        setServerError(res.data.message);
+                        setIsSubmit(false);
+                        return () => {
+                            isSubscribed = false;
+                        }
+                    }
+                    
+                    setValue({ username: formValues.username, email: formValues.email, token: res.data.token });
+                    navigate('/');
+                }
+                
+                register();
+            }
         }
-    }, [formErrors, isSubmit]);
+
+        return () => {
+            isSubscribed = false;
+        }
+
+    }, [value, setValue, navigate, formErrors, isSubmit, formValues]);
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -43,7 +82,7 @@ const Register = () => {
             errors.password = "Password must be more than 4 characters";
         } else if (values.password.length > 10) {
             errors.password = "Password cannot exceed more than 10 characters";
-        } else if (values.confirmPassword.length === values.password) {
+        } else if (values.confirmPassword !== values.password) {
             errors.password = "Passwords don't match.";
         }
 
@@ -75,6 +114,7 @@ const Register = () => {
                     <input name="confirmPassword" value={formValues.confirmPassword} type="password" onChange={handleChange} />
                     <p className="error">{formErrors.confirmPassword}</p>
                 </div>
+                <p className="error">{serverError}</p>
                 <div className="buttons">
                     <button disabled={isSubmitted} className="submit" type="submit">Регистрация</button>
                     <Link className="button" to="/login">Вече имам профил</Link>

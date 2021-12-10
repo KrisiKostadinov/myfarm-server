@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { BASE_URL_DB } from '../../App';
+import { UserContext } from '../../contexts/UserContext';
 import './Login.css'
 
 const Login = () => {
@@ -7,8 +10,11 @@ const Login = () => {
     const initialValues = { email: '', password: '' };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
+    const [serverError, setServerError] = useState('');
     const [isSubmit, setIsSubmit] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const { value, setValue } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,10 +28,41 @@ const Login = () => {
     };
 
     useEffect(() => {
+        let isSubscribed = true;
+
         if (Object.keys(formErrors).length === 0 && isSubmit) {
+
             setIsSubmitted(true);
+
+            if (isSubscribed) {
+                const login = async () => {
+                    const res = await axios.post(BASE_URL_DB + 'farms/login',
+                    {
+                        password: formValues.password,
+                        email: formValues.email
+                    });
+
+                    if(res.status === 208) {
+                        setIsSubmit(false);
+                        setServerError(res.data.message);
+                        setIsSubmitted(false);
+                        return () => {
+                            isSubscribed = false;
+                        }
+                    }
+                    
+                    setValue({ username: formValues.username, email: formValues.email, token: res.data.token });
+                    navigate('/');
+                }
+
+                login();
+            }
+
+            return () => {
+                isSubscribed = false;
+            }
         }
-    }, [formErrors, isSubmit]);
+    }, [value, setValue, navigate, formErrors, isSubmit, formValues]);
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -60,6 +97,7 @@ const Login = () => {
                     <input name="password" value={formValues.password} type="password" onChange={handleChange} />
                     <p className="error">{formErrors.password}</p>
                 </div>
+                <p className="error">{serverError}</p>
                 <div className="buttons">
                     <button disabled={isSubmitted} className="submit" type="submit">Вход</button>
                     <Link className="button" to="/register">Нямам регистрация</Link>

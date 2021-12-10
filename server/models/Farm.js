@@ -4,7 +4,6 @@ const { String, Number } = mongoose.Schema.Types;
 const schema = new mongoose.Schema({
     username: {
         type: String,
-        unique: true,
     },
     email: {
         type: String,

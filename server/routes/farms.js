@@ -15,35 +15,37 @@ router.post('/register', async (req, res, next) => {
   const farmFromDb = await Farm.findOne({ email });
 
   if (farmFromDb) {
-    return res.send('This email already exists!');
+    return res.status(208).send({ message: 'This email already exists!' });
   }
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
 
   const farm = await Farm.create({ username, password: hashPassword, email });
-  console.log(farm);
-
 
   const token = jwt.sign({ username, email, _id: farm._id }, config.secret_jwt, { expiresIn: '1h' });
 
-  res.send(token);
+  res.send({ token: token });
 });
 
 router.post('/login', async (req, res, next) => {
   var email = req.body.email,
     password = req.body.password;
 
-    
-    const farmFromDb = await Farm.findOne({ email });
-    
-    if (bcrypt.compare(password, farmFromDb.password)) {
-      const token = jwt.sign({ username: farmFromDb.username, email, _id: farmFromDb._id }, config.secret_jwt, { expiresIn: '1h' });
-      console.log(token);
-    return res.send(token);
+  const farmFromDb = await Farm.findOne({ email });
+
+  if (!farmFromDb) {
+    return res.status(208).send({ message: 'This email or password is wrong!' });
   }
 
-  res.send('The username or password is wrong.');
+  const isCompares = await bcrypt.compare(password, farmFromDb.password);
+
+  if (isCompares) {
+    const token = jwt.sign({ username: farmFromDb.username, email, _id: farmFromDb._id }, config.secret_jwt, { expiresIn: '1h' });
+    return res.send({ token: token });
+  }
+
+  return res.status(208).send({ message: 'This email or password is wrong!' });
 });
 
 router.get('/verify', (req, res, next) => {
