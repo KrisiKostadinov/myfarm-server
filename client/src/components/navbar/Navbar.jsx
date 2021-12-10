@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import './Navbar.css'
+import { UserContext } from '../../contexts/UserContext'
 
 const Navbar = () => {
+
+    const { value } = useContext(UserContext);
     return (
         <div className="navbar">
             <div className="container nav-menu">
@@ -19,14 +22,25 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
-                <ul className="nav-items">
-                    <li className="list-item">
-                        <Link to="/register">Регистрация</Link>
-                    </li>
-                    <li className="list-item">
-                        <Link to="/login">Вход</Link>
-                    </li>
-                </ul>
+                {
+                    value ?
+                        <ul className="nav-items">
+                            <li className="list-item">
+                                <Link to="#">Здравейте, {value.username}!</Link>
+                            </li>
+                            <li className="list-item">
+                                <Link to="/logout">Изход</Link>
+                            </li>
+                        </ul> :
+                        <ul className="nav-items">
+                            <li className="list-item">
+                                <Link to="/register">Регистрация</Link>
+                            </li>
+                            <li className="list-item">
+                                <Link to="/login">Вход</Link>
+                            </li>
+                        </ul>
+                }
             </div>
         </div>
     )

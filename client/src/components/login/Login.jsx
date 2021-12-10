@@ -51,7 +51,7 @@ const Login = () => {
                         }
                     }
                     
-                    setValue({ username: formValues.username, email: formValues.email, token: res.data.token });
+                    setValue({ username: res.data.username, email: res.data.email, token: res.data.token });
                     navigate('/');
                 }
 

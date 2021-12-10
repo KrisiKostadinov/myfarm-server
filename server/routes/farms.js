@@ -42,7 +42,7 @@ router.post('/login', async (req, res, next) => {
 
   if (isCompares) {
     const token = jwt.sign({ username: farmFromDb.username, email, _id: farmFromDb._id }, config.secret_jwt, { expiresIn: '1h' });
-    return res.send({ token: token });
+    return res.send({ username: farmFromDb.username, email: farmFromDb.email, token: token });
   }
 
   return res.status(208).send({ message: 'This email or password is wrong!' });
