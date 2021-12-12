@@ -1,5 +1,6 @@
 .navbar {
     background: linear-gradient(90deg, #fb9300 0%, #ff5e00 100%);
+    box-shadow: 0 10px 10px #0002;
 }
 
 .nav-brand {

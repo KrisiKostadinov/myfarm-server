@@ -90,7 +90,7 @@ const Register = () => {
     };
 
     return (
-        <div className="register container">
+        <div className="register container" va>
             <h2>Регистрация на Ферма</h2>
             <hr />
             <form onSubmit={handleSubmit}>

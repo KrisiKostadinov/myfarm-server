@@ -1,0 +1,45 @@
+.dashboard {
+    width: 300px;
+    background-color: #fb9300;
+    height: 90vh;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.dashboard ul > a,
+.dashboard ul > li {
+    padding: 1rem 2rem;
+    cursor: pointer;
+}
+
+.dashboard ul > ul > li {
+    padding: 1rem 4rem;
+}
+
+.nav-item {
+    animation: fade-in 400ms ease-in-out;
+    transition: 400ms;
+}
+
+.nav-item:hover {
+    background-color: #ff5e00;
+}
+
+.dashboard ul li ul {
+    display: none;
+}
+
+.dashboard ul li:hover > ul {
+    display: block;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

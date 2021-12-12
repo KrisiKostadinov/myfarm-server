@@ -11,14 +11,23 @@ const Navbar = () => {
             <div className="container nav-menu">
                 <div className="nav-brand">
                     <Link to="/home">
-                        <div className="brand">Моята Ферма</div>
+                        <div className="brand">
+                            <i class="fas fa-fan"></i>
+                            Моята Ферма
+                        </div>
                     </Link>
                     <ul className="nav-items">
                         <li className="list-item">
-                            <Link to="/home">Начало</Link>
+                            <Link to="/home">
+                                <i class="fas fa-home"></i>
+                                Начало
+                            </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link to="/about">Относно</Link>
+                        <li className="list-item">
+                            <Link to="/about">
+                                <i class="fas fa-question"></i>
+                                Относно
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -26,18 +35,30 @@ const Navbar = () => {
                     value ?
                         <ul className="nav-items">
                             <li className="list-item">
-                                <Link to="#">Здравейте, {value.username}!</Link>
+                                <Link to="#">
+                                    <i class="fas fa-user"></i>
+                                    Здравейте, {value.username}!
+                                </Link>
                             </li>
                             <li className="list-item">
-                                <Link to="/logout">Изход</Link>
+                                <Link to="/logout">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Изход
+                                </Link>
                             </li>
                         </ul> :
                         <ul className="nav-items">
                             <li className="list-item">
-                                <Link to="/register">Регистрация</Link>
+                                <Link to="/register">
+                                    <i class="fas fa-user-plus"></i>
+                                    Регистрация
+                                </Link>
                             </li>
                             <li className="list-item">
-                                <Link to="/login">Вход</Link>
+                                <Link to="/login">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Вход
+                                </Link>
                             </li>
                         </ul>
                 }
