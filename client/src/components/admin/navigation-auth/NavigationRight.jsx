@@ -12,40 +12,40 @@ const NavigationRight = () => {
                 </li>
                 <li>
                     <Link to="#animals">Добитък
-                        <i class="fas fa-caret-down"></i>
+                        <i className="fas fa-caret-down"></i>
                     </Link>
                     <ul>
                         <li className="nav-item">
                             <Link to="/admin/animal-all">Всички</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/animals/create">Ново</Link>
+                            <Link to="/admin/create-animal">Ново</Link>
                         </li>
                     </ul>
                 </li>
                 <li>
                     <Link to="#barns">Хамбари
-                        <i class="fas fa-caret-down"></i>
+                        <i className="fas fa-caret-down"></i>
                     </Link>
                     <ul id="nested2">
                         <li className="nav-item">
-                            <Link to="/barn">Нов</Link>
+                            <Link to="/admin/create-barn">Нов</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/barn/all">Всички</Link>
+                            <Link to="/admin/barn-all">Всички</Link>
                         </li>
                     </ul>
                 </li>
                 <li>
                     <Link to="#qurantines">Пад карантина
-                        <i class="fas fa-caret-down"></i>
+                        <i className="fas fa-caret-down"></i>
                     </Link>
                     <ul>
                         <li className="nav-item">
-                            <Link to="animals/create">Ново</Link>
+                            <Link to="/admin/create-qurantines">Ново</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="animals/qurantines">Всички</Link>
+                            <Link to="/admin/qurantines-all">Всички</Link>
                         </li>
                     </ul>
                 </li>

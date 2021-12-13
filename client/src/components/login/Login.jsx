@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
+
+import './Login.css'
 import { BASE_URL_DB } from '../../App';
 import { UserContext } from '../../contexts/UserContext';
-import './Login.css'
 
 const Login = () => {
 
@@ -41,7 +43,7 @@ const Login = () => {
                         password: formValues.password,
                         email: formValues.email
                     });
-
+                    
                     if(res.status === 208) {
                         setIsSubmit(false);
                         setServerError(res.data.message);
@@ -51,8 +53,9 @@ const Login = () => {
                         }
                     }
                     
+                    navigate('/admin');
                     setValue({ username: res.data.username, email: res.data.email, token: res.data.token });
-                    navigate('/');
+                    toast.success('Успешно влизане в системта.');
                 }
 
                 login();

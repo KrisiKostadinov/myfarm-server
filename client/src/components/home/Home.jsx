@@ -1,10 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { UserContext } from '../../contexts/UserContext';
 import './Home.css'
 
 const Home = () => {
-    const { value } = useContext(UserContext);
 
     return (
         <div className="home-wrapper">

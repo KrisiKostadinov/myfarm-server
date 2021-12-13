@@ -1,2 +1,8 @@
 export { default as Dashboard } from './dashboard/Dashboard'
 export { default as AnimalAll } from './animal-all/AnimalAll'
+export { default as CreateAnimal } from './create-animal/CreateAnimal'
+export { default as NavigationRight } from './navigation-auth/NavigationRight'
+export { default as QurantinesAll } from './qurantines-all/QurantinesAll'
+export { default as CreateQurantines } from './create-qurantines/CreateQurantines'
+export { default as CreateBarn } from './create-barn/CreateBarn'
+export { default as BarnAll } from './barn-all/BarnAll'

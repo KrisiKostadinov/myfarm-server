@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import './Register.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+
+import './Register.css'
 import { BASE_URL_DB } from '../../App'
 import { UserContext } from '../../contexts/UserContext'
 
@@ -53,6 +55,7 @@ const Register = () => {
                     }
                     
                     setValue({ username: formValues.username, email: formValues.email, token: res.data.token });
+                    toast.success('Успешна регистрация.');
                     navigate('/');
                 }
                 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Qurantines = () => {
+const CreateQurantines = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Qurantines = () => {
     )
 }
 
-export default Qurantines
+export default CreateQurantines
